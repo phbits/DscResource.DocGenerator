@@ -76,7 +76,7 @@ function Invoke-Git
         if ($process.Start() -eq $true)
         {
             Write-Debug -Message ($localizedData.InvokingGitMessage -f 'InsideSTART')
-            if ($process.WaitForExit($TimeOut) -eq $true)
+            if ($process.WaitForExit(-1) -eq $true)
             {
                 Write-Debug -Message ($localizedData.InvokingGitMessage -f 'InsideTIMEOUT')
                 $returnValue['ExitCode'] = $process.ExitCode
