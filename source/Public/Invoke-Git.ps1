@@ -62,7 +62,7 @@ function Invoke-Git
 
     try
     {
-        Write-Debug -Message ($localizedData.InvokingGitMessage -f 'InsideTRY')
+        #Write-Debug -Message ($localizedData.InvokingGitMessage -f 'InsideTRY')
         $process = New-Object -TypeName System.Diagnostics.Process
         $process.StartInfo.Arguments = $Arguments
         $process.StartInfo.CreateNoWindow = $true
@@ -75,7 +75,7 @@ function Invoke-Git
 
         if ($process.Start() -eq $true)
         {
-            Write-Debug -Message ($localizedData.InvokingGitMessage -f 'InsideSTART')
+            #Write-Debug -Message ($localizedData.InvokingGitMessage -f 'InsideSTART')
             if ($process.WaitForExit(-1) -eq $true)
             {
                 Write-Debug -Message ($localizedData.InvokingGitMessage -f 'InsideTIMEOUT')
@@ -102,6 +102,7 @@ function Invoke-Git
     Write-Debug -Message ($localizedData.InvokingGitMessage -f $returnValue.ExitCode)
     Write-Debug -Message ($localizedData.InvokingGitMessage -f $returnValue.StandardOutput)
     Write-Debug -Message ($localizedData.InvokingGitMessage -f $returnValue.StandardError)
+    Write-Debug -Message ($localizedData.InvokingGitMessage -f $WorkingDirectory)
     Write-Debug -Message ($localizedData.InvokingGitMessage -f '---')
     
     return $returnValue
