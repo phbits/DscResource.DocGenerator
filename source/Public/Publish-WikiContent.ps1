@@ -153,7 +153,7 @@ function Publish-WikiContent
             Write-Verbose -Message ($localizedData.CommitAndTagRepoChangesMessage -f $ModuleVersion)
 
             $gitCommitResult = Invoke-Git -WorkingDirectory $tempPath.FullName `
-                                    -Arguments @( 'commit', '--message', "`"$($localizedData.UpdateWikiCommitMessage -f $ModuleVersion)`"", '--quiet' )
+                                    -Arguments @( 'commit', '--message', "`"$($localizedData.UpdateWikiCommitMessage -f $ModuleVersion)`"" )
 
             if ($gitCommitResult.ExitCode -eq 0)
             {
@@ -163,10 +163,10 @@ function Publish-WikiContent
                 Write-Verbose -Message $localizedData.PushUpdatedRepoMessage
 
                 $null = Invoke-Git -WorkingDirectory $tempPath.FullName `
-                            -Arguments @( 'push', 'origin', '--quiet' )
+                            -Arguments @( 'push', 'origin' )
 
                 $null = Invoke-Git -WorkingDirectory $tempPath.FullName `
-                            -Arguments @( 'push', 'origin', $ModuleVersion, '--quiet' )
+                            -Arguments @( 'push', 'origin', $ModuleVersion )
 
                 Write-Verbose -Message $localizedData.PublishWikiContentCompleteMessage
             }
