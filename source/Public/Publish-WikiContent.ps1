@@ -116,7 +116,7 @@ function Publish-WikiContent
         Write-Verbose -Message ($script:localizedData.CloneWikiGitRepoMessage -f $WikiRepoName)
 
         $gitCloneResult = Invoke-Git -WorkingDirectory $tempPath.FullName `
-                            -Arguments @( 'clone', $wikiRepoName, '--quiet' )
+                            -Arguments @( 'clone', $wikiRepoName )
 #                            -Arguments @( 'clone', $wikiRepoName, $tempPath, '--quiet' )
 
         if ($gitCloneResult.ExitCode -eq 0)
