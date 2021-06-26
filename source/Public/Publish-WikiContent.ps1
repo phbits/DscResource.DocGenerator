@@ -115,9 +115,9 @@ function Publish-WikiContent
         
         if (Test-Path $tempPath.FullName -eq $true)
         {
-            Write-Verbose -Message "Test-Path $($tempPath.FullName) -eq `$true"
+            Write-Verbose -Message "Test-Path $($tempPath.FullName) == `$true"
         } else {
-            Write-Verbose -Message "Test-Path $($tempPath.FullName) -ne `$true"
+            Write-Verbose -Message "Test-Path $($tempPath.FullName) != `$true"
         }
 
         Write-Verbose -Message ($script:localizedData.CloneWikiGitRepoMessage -f $WikiRepoName)
