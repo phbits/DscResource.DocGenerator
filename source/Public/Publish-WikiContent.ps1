@@ -112,6 +112,13 @@ function Publish-WikiContent
             $null = Invoke-Git -WorkingDirectory $tempPath.FullName `
                         -Arguments @( 'config', '--global', 'core.autocrlf', $GlobalCoreAutoCrLf )
         }
+        
+        if (Test-Path $tempPath.FullName -eq $true)
+        {
+            Write-Verbose -Message "Test-Path $($tempPath.FullName) -eq `$true"
+        } else {
+            Write-Verbose -Message "Test-Path $($tempPath.FullName) -ne `$true"
+        }
 
         Write-Verbose -Message ($script:localizedData.CloneWikiGitRepoMessage -f $WikiRepoName)
 
