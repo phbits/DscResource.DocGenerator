@@ -79,9 +79,9 @@ function Invoke-Git
             if ($process.WaitForExit($TimeOut) -eq $true)
             {
                 Write-Debug -Message ($localizedData.InvokingGitMessage -f 'InsideTIMEOUT')
-                $returnValue.ExitCode = $process.ExitCode
-                $returnValue.StandardOutput = $process.StandardOutput.ReadToEnd()
-                $returnValue.StandardError = $process.StandardError.ReadToEnd()
+                $returnValue['ExitCode'] = $process.ExitCode
+                $returnValue['StandardOutput'] = $process.StandardOutput.ReadToEnd()
+                $returnValue['StandardError'] = $process.StandardError.ReadToEnd()
             }
         }
     }
