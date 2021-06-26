@@ -109,15 +109,8 @@ function Publish-WikiContent
         {
             Write-Verbose -Message $script:localizedData.ConfigGlobalGitMessage
 
-            $null = Invoke-Git -WorkingDirectory $tempPath.FullName `
-                        -Arguments @( 'config', '--global', 'core.autocrlf', $GlobalCoreAutoCrLf )
-        }
-        
-        if (Test-Path $tempPath.FullName -eq $true)
-        {
-            Write-Verbose -Message "Test-Path $($tempPath.FullName) == `$true"
-        } else {
-            Write-Verbose -Message "Test-Path $($tempPath.FullName) != `$true"
+            #$null = Invoke-Git -WorkingDirectory $tempPath.FullName `
+            #            -Arguments @( 'config', '--global', 'core.autocrlf', $GlobalCoreAutoCrLf )
         }
 
         Write-Verbose -Message ($script:localizedData.CloneWikiGitRepoMessage -f $WikiRepoName)
