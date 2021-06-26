@@ -9,7 +9,7 @@
         The path to the git working directory.
 
     .PARAMETER Timeout
-        Seconds to wait for process to exit.
+        Milliseconds to wait for process to exit.
 
     .PARAMETER Arguments
         The arguments to pass to the Git executable.
@@ -37,7 +37,7 @@ function Invoke-Git
 
         [Parameter(Mandatory = $false)]
         [System.Int32]
-        $TimeOut = 120,
+        $TimeOut = 120000,
 
         [Parameter(ValueFromRemainingArguments = $true)]
         [System.String[]]
@@ -76,7 +76,7 @@ function Invoke-Git
         if ($process.Start() -eq $true)
         {
             #Write-Debug -Message ($localizedData.InvokingGitMessage -f 'InsideSTART')
-            if ($process.WaitForExit(120000) -eq $true)
+            if ($process.WaitForExit($TimeOut) -eq $true)
             {
                 Write-Debug -Message ($localizedData.InvokingGitMessage -f 'InsideTIMEOUT')
                 $returnValue.ExitCode = $process.ExitCode
