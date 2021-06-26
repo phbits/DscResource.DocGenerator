@@ -62,10 +62,11 @@ function Invoke-Git
 
     try
     {
+        Write-Debug -Message ($localizedData.InvokingGitMessage -f 'InsideTRY')
         $process = New-Object -TypeName System.Diagnostics.Process
         $process.StartInfo.Arguments = $Arguments
         $process.StartInfo.CreateNoWindow = $true
-        $process.StartInfo.FileName = 'git.exe'
+        $process.StartInfo.FileName = 'git'
         $process.StartInfo.RedirectStandardOutput = $true
         $process.StartInfo.RedirectStandardError = $true
         $process.StartInfo.UseShellExecute = $false
@@ -74,8 +75,10 @@ function Invoke-Git
 
         if ($process.Start() -eq $true)
         {
+            Write-Debug -Message ($localizedData.InvokingGitMessage -f 'InsideSTART')
             if ($process.WaitForExit($TimeOut) -eq $true)
             {
+                Write-Debug -Message ($localizedData.InvokingGitMessage -f 'InsideTIMEOUT')
                 $returnValue.ExitCode = $process.ExitCode
                 $returnValue.StandardOutput = $process.StandardOutput.ReadToEnd()
                 $returnValue.StandardError = $process.StandardError.ReadToEnd()
@@ -91,6 +94,7 @@ function Invoke-Git
         if ($process)
         {
             $process.Dispose()
+            Write-Debug -Message ($localizedData.InvokingGitMessage -f 'InsideDISPOSE')
         }
     }
 
