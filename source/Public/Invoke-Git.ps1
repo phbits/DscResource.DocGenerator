@@ -58,15 +58,12 @@ function Invoke-Git
         $argumentsJoined = $argumentsJoined -replace ':[\d|a-f].*@', ':RedactedToken@'
     }
 
-    Write-Debug -Message ($localizedData.InvokingGitMessage -f $argumentsJoined)
-
     try
     {
-        #Write-Debug -Message ($localizedData.InvokingGitMessage -f 'InsideTRY')
         $process = New-Object -TypeName System.Diagnostics.Process
         $process.StartInfo.Arguments = $Arguments
         $process.StartInfo.CreateNoWindow = $true
-        $process.StartInfo.FileName = 'git'
+        $process.StartInfo.FileName = 'git.exe'
         $process.StartInfo.RedirectStandardOutput = $true
         $process.StartInfo.RedirectStandardError = $true
         $process.StartInfo.UseShellExecute = $false
@@ -75,10 +72,8 @@ function Invoke-Git
 
         if ($process.Start() -eq $true)
         {
-            #Write-Debug -Message ($localizedData.InvokingGitMessage -f 'InsideSTART')
             if ($process.WaitForExit($TimeOut) -eq $true)
             {
-                Write-Debug -Message ($localizedData.InvokingGitMessage -f 'InsideTIMEOUT')
                 $returnValue.ExitCode = $process.ExitCode
                 $returnValue.StandardOutput = $process.StandardOutput.ReadToEnd()
                 $returnValue.StandardError = $process.StandardError.ReadToEnd()
@@ -94,16 +89,8 @@ function Invoke-Git
         if ($process)
         {
             $process.Dispose()
-            Write-Debug -Message ($localizedData.InvokingGitMessage -f 'InsideDISPOSE')
         }
     }
 
-    Write-Debug -Message ($localizedData.InvokingGitMessage -f '---')
-    Write-Debug -Message ($localizedData.InvokingGitMessage -f $returnValue.ExitCode)
-    Write-Debug -Message ($localizedData.InvokingGitMessage -f $returnValue.StandardOutput)
-    Write-Debug -Message ($localizedData.InvokingGitMessage -f $returnValue.StandardError)
-    Write-Debug -Message ($localizedData.InvokingGitMessage -f $WorkingDirectory)
-    Write-Debug -Message ($localizedData.InvokingGitMessage -f '---')
-    
     return $returnValue
 }
