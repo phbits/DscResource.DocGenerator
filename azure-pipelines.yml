@@ -1,7 +1,7 @@
 trigger:
   branches:
     include:
-    - main
+    - main-debug-2
   paths:
     exclude:
     - CHANGELOG.md
@@ -45,6 +45,27 @@ stages:
               artifact: 'output'
               publishLocation: 'pipeline'
               parallel: true
+
+  - stage: Debug
+    dependsOn: Build
+    jobs:
+      - job: debugWiki
+        displayName: 'Debug Wiki'
+        timeoutInMinutes: 0
+        pool:
+          vmImage: 'vs2017-win2016'
+        steps:
+          - task: DownloadPipelineArtifact@2
+            displayName: 'Download Pipeline Artifact'
+            inputs:
+              buildType: 'current'
+              artifactName: $(buildArtifactName)
+              targetPath: '$(Build.SourcesDirectory)/$(buildArtifactName)'
+          - pwsh: |
+              $env:GitHubToken = 'anyFakeToken'
+              ./build.ps1 -tasks Publish_GitHub_Wiki_Content
+            name: runDebugTask
+            displayName: 'Run Publish_GitHub_Wiki_Content'
 
   - stage: Test
     dependsOn: Build
